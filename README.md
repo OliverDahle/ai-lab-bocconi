@@ -2,31 +2,31 @@
 
 Can we tell from a single cell's gene expression whether it was grown in **hypoxia** (low oxygen) or **normoxia**, and does that prediction carry over to other cell lines and sequencing technologies?
 
-This repository contains our final report notebook for the **AI Lab in the Mathematical Modelling in Machine Learning** course at Bocconi University the spring semester of 2026. We analyse single-cell RNA-seq data from two breast-cancer cell lines (**MCF7** and **HCC1806**), each profiled with two technologies (**SmartSeq** and **DropSeq**). The pipeline covers quality control and EDA, dimensionality reduction, clustering, supervised classification, cross-dataset transfer and a multi-dataset "universal" hypoxia classifier.
+This repository contains our final report notebook for the **AI Lab in the Mathematical Modelling in Machine Learning** course at Bocconi University in the spring semester of 2026. We analyse single-cell RNA-seq data from two breast-cancer cell lines (**MCF7** and **HCC1806**), each profiled with two technologies (**SmartSeq** and **DropSeq**). The pipeline covers quality control and EDA, dimensionality reduction, clustering, supervised classification, cross-dataset transfer and a multi-dataset "universal" hypoxia classifier.
 
 > **Note:** The datasets were provided by the course and are **not included** in this repository. See [Data](#data) below.
 
 ## Notebook outline
 
-1. Introduction, materials and methods
-2. Data loading and inventory: labels, class balance, train/test compatibility
-3. Quality control: unfiltered vs filtered SmartSeq data
-4. Distributional EDA: scale, `log2(x + 1)` decision, sparsity, duplicate genes
-5. Dimensionality reduction per dataset: PCA, UMAP, Kernel PCA, Factor Analysis, PLS-DA, ICA, Sparse PCA, random projections
-6. Clustering per dataset: k-means, KNN-graph, hierarchical, DBSCAN
-7. Supervised classification within each dataset: logistic regression, linear SVM, random forest, PCA + LR, Gaussian NB, with leakage-safe CV pipelines
-8. Cross-dataset transfer learning: transfer matrix, asymmetry, statistical tests
-9. Feature stability and consensus hypoxia biomarkers
-10. Multi-dataset vs single-dataset training
-11. Universal hypoxia classifier: leave-one-cell-line-out, leave-one-technology-out, bootstrap CIs
-12. Final test-set prediction
-13. Conclusion
+Section numbers match the notebook.
+
+- **0–2** Setup, introduction, materials and methods
+- **3–5** Data loading, quality control and EDA: labels, class balance, unfiltered vs filtered SmartSeq, `log2(x + 1)` decision
+- **6–9** Dimensionality reduction: PCA, UMAP, Kernel PCA, Factor Analysis, PLS-DA, ICA, Sparse PCA, random projections
+- **10** Clustering: k-means, KNN-graph, hierarchical, DBSCAN
+- **11** Supervised classification within each dataset: linear, tree-ensemble, PCA-based and baseline models in leakage-safe CV pipelines
+- **12** Cross-dataset transfer learning
+- **13** Feature stability and consensus hypoxia biomarkers
+- **14** Multi-dataset vs single-dataset training
+- **15** Universal hypoxia classifier: leave-one-cell-line-out, leave-one-technology-out, bootstrap CI
+- **16** Final test-set prediction
+- **17** Conclusion
 
 ## Key findings
 
-- Hypoxia is **highly predictable within a single dataset** (same cell line and technology).
-- Performance **drops when transferring across cell lines or sequencing technologies**. Both biological and technical variation shape what the models learn.
-- A **universal classifier trained on all four datasets** does not match the best within-dataset models. It still gives meaningful predictions on every dataset, so it trades some accuracy for generality.
+- **Within a single dataset, hypoxia is almost perfectly predictable**: cross-validated ROC-AUC of 0.99–1.00 on all four datasets.
+- **Performance drops across cell lines and technologies.** Transfer works best when the two datasets share many of their 3,000 selected genes.
+- **The universal classifier does not generalise to unseen settings.** Trained on the 70 genes shared by all four datasets, it reaches ROC-AUC 0.89 on unseen MCF7 cells but 0.62 on unseen HCC1806 cells, and is no better than chance (0.44–0.48) on an unseen sequencing technology.
 
 See Section 17 of the notebook for the full discussion.
 
