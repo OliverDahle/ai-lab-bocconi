@@ -1,0 +1,29 @@
+# --- Course data: NOT to be published ---
+SmartSeq/
+DropSeq/
+data/
+*_Data.txt
+*_Data_train.txt
+*_Data_test_anonim.txt
+*_MetaData.tsv
+
+# --- Generated outputs (predictions on the test files, trained models) ---
+Final_Predictions/
+*.pkl
+*.joblib
+
+# --- Python / Jupyter ---
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+
+# --- Editor / OS ---
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
